@@ -1,0 +1,20 @@
+{
+  "name": "flurry-collector",
+  "version": "0.1.0",
+  "author": "mayahiro <mayahiro.develop@gmail.com>",
+  "repository": "https://github.com/mayahiro/flurry-collector",
+  "license": "Apache-2.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "0.15.x",
+    "bluebird": "3.4.x",
+    "lodash": "4.17.x",
+    "moment": "2.17.x",
+    "mysql": "2.13.x",
+    "sequelize": "3.30.x"
+  }
+}

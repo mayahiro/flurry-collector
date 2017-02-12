@@ -1,0 +1,11 @@
+{
+  "flurryProgramaticToken": "YOUR_PROGRAMATIC_TOKEN",
+  "databaseSettings": {
+    "dialectOptions": {
+      "charset": "utf8mb4"
+    },
+    "database": "database_name",
+    "username": "username",
+    "password": "password"
+  }
+}
