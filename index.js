@@ -54,7 +54,7 @@ m.readModels(() => {
               })
                 .spread((appVersion, created) => {
                   if (created) {
-                    console.log(`new version: appVersion.version`);
+                    console.log(`new version: ${appVersion.version}`);
                   }
                   resolve();
                 });
