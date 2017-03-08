@@ -117,6 +117,7 @@ m.readModels(() => {
     })
     .then(() => {
       // アプリバージョン毎にイベント収集
+      console.log('collect Events');
       return new Promise((resolve, reject) => {
         Promise.mapSeries((appVersions), appVersion => {
           if (!appVersion.enable_collect) {
@@ -177,10 +178,12 @@ m.readModels(() => {
     })
     .then(() => {
       // イベントパラメーター収集
+      console.log('collect Event Parameters');
       return new Promise((resolve, reject) => {
         models.Event.findAll({where: {flurry_event_id: {$ne: '-1'}}, raw: true})
           .then(events => {
             Promise.mapSeries((events), (event) => {
+              console.log(`collect Event Parameters(${event.flurry_event_id}:${event.name})`);
               return new Promise((resolve, reject) => {
                 // API叩く
                 axios.get('https://api-metrics.flurry.com/public/v1/data/eventParams/day/app;show=all/event/paramName/paramValue/appVersion', {
@@ -256,6 +259,6 @@ m.readModels(() => {
           .catch(err => reject(err));
       });
     })
-    .then(() => console.log('end'))
+    .then(() => console.log('done!'))
     .catch(err => console.error(err));
 });
