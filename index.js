@@ -148,21 +148,26 @@ m.readModels(() => {
                       }
                     })
                       .spread((event, created) => {
-                        models.EventCount.findOrCreate({
-                          where: {
-                            app_version_id: appVersion.id,
-                            event_id: event.id,
-                            date: date
-                          }
-                        })
-                          .spread((eventCount, created) => {
-                            eventCount.active_device_count = row.activeDevices;
-                            eventCount.new_device_count = row.newDevices;
-                            eventCount.count = row.occurrences;
-                            eventCount.save()
-                              .then(() => resolve())
-                              .catch(err => reject(err));
-                          });
+                        event.name = row['event|name'];
+                        event.save()
+                          .then(() => {
+                            models.EventCount.findOrCreate({
+                              where: {
+                                app_version_id: appVersion.id,
+                                event_id: event.id,
+                                date: date
+                              }
+                            })
+                              .spread((eventCount, created) => {
+                                eventCount.active_device_count = row.activeDevices;
+                                eventCount.new_device_count = row.newDevices;
+                                eventCount.count = row.occurrences;
+                                eventCount.save()
+                                  .then(() => resolve())
+                                  .catch(err => reject(err));
+                              });
+                          })
+                          .catch(err => reject(err));
                       });
                   });
                 })
@@ -250,7 +255,14 @@ m.readModels(() => {
                       .then(() => resolve())
                       .catch(err => reject(err));
                   })
-                  .catch(err => reject());
+                  .catch(err => {
+                    console.log(`error Event Parameters(${event.flurry_event_id}:${event.name})`);
+                    if (err.response) {
+                      resolve();
+                    } else {
+                      reject(err);
+                    }
+                  });
               });
             })
               .then(() => resolve())
