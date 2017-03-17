@@ -231,6 +231,11 @@ m.readModels(() => {
                               .spread((eventParameterValue, created) => {
                                 const appVersion = _.find(appVersions, appVersion => (appVersion['App.flurry_id'] === row['app|id'] && appVersion.version === row['appVersion|name']));
 
+                                if (appVersion === undefined) {
+                                  console.log('no appVersion|name');
+                                  resolve();
+                                }
+
                                 // EventPatameterValueCountをfindOrCreate
                                 models.EventParameterValueCount.findOrCreate({
                                   where: {
