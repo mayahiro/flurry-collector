@@ -234,6 +234,7 @@ m.readModels(() => {
                                 if (appVersion === undefined) {
                                   console.log('no appVersion|name');
                                   resolve();
+                                  return;
                                 }
 
                                 // EventPatameterValueCountをfindOrCreate
