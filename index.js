@@ -1,3 +1,5 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const _ = require('lodash');
 const Promise = require('bluebird');
 const moment = require('moment');
@@ -174,7 +176,14 @@ m.readModels(() => {
                   .then(() => resolve())
                   .catch(err => reject(err));
               })
-              .catch(err => reject(err));
+              .catch(err => {
+                if (err.response.status === 400) {
+                  console.log('err: 400')
+                  resolve();
+                } else {
+                  reject(err);
+                }
+              });
           });
         })
           .then(() => resolve())
